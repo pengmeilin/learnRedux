@@ -1,0 +1,36 @@
+const { createStore} = Redux;
+
+// 3.初始化state
+const initState = {
+  todos: [],
+  posts: [],
+}
+
+// 2.创建reducer函数
+function myReducer(state = initState, action){
+  //console.log(state, action);
+  if (action.type === 'ADD_POST') {
+    return {
+      ...state,
+      posts: [...state.posts, action.post]
+    }
+  }
+  if (action.type === 'ADD_TODO') {
+    return {
+      ...state,
+      todos: [...state.todos, action.todo]
+    }
+  }
+}
+
+// 1.创建store
+const store = createStore(myReducer);
+// 6.订阅store
+store.subscribe(() => {
+  console.log('store状态已更新');
+  console.log(store.getState());
+})
+// 5.派发action
+store.dispatch({type: "ADD_POST",post: "我的第二篇博客"});
+store.dispatch({type: "ADD_TODO",todo: "学习"});
+store.dispatch({type: "ADD_TODO",todo: "工作"});
